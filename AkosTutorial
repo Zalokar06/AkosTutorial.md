@@ -1,0 +1,51 @@
+import subprocess
+import os
+
+def ustvari_stran():
+    naslov = input("Vnesite naslov nove strani: ")
+    ime_datoteke = input("Vnesite ime datoteke (brez .md): ")
+    video_ime = input("Vnesite ime videa z razširitvijo (npr. .mp4): ")
+
+    video_pot = os.path.join("C:\\Users\\janza\\Downloads\\Videji\\", video_ime)
+
+    # Preveri, ali mapa 'docs' obstaja, če ne, jo ustvari
+    if not os.path.exists('docs'):
+        os.makedirs('docs')
+
+    with open(f"docs/{ime_datoteke}.md", "w", encoding='latin-1') as f:
+        f.write(f"# {naslov}\n\nTukaj dodajte vsebino svoje nove strani.\n\n")
+        f.write(f'Video: <video width="640" height="360" controls><source src="{video_pot}" type="video/mp4">Vaš brskalnik ne podpira predvajalnika videa.</video>')
+
+    print(f"Datoteka {ime_datoteke}.md je bila ustvarjena v mapi 'docs'.")
+
+    css_path = "docs/assets/css"
+    os.makedirs(css_path, exist_ok=True)
+
+    with open(os.path.join(css_path, "style.scss"), "w") as scss_file:
+        scss_file.write(".naslov { color: red; }")
+
+    print("Datoteka style.scss je bila ustvarjena ali posodobljena v mapi 'docs/assets/css'.")
+
+def zazenite_mkdocs():
+    subprocess.run(["mkdocs", "serve"])
+
+def glavni_meni():
+    while True:
+        print("\nIzberite operacijo:")
+        print("1. Ustvari novo stran")
+        print("2. Zaženi MkDocs strežnik")
+        print("3. Izhod")
+        izbira = input("Vaša izbira: ")
+
+        if izbira == "1":
+            ustvari_stran()
+        elif izbira == "2":
+            zazenite_mkdocs()
+        elif izbira == "3":
+            break
+        else:
+            print("Neveljavna izbira. Poskusite znova.")
+
+if __name__ == "__main__":
+    print("Dobrodošli v upravljalcu vsebin za MkDocs!")
+    glavni_meni()
