@@ -12,16 +12,16 @@ def ustvari_stran():
     if not os.path.exists('docs'):
         os.makedirs('docs')
 
-    with open(f"docs/{ime_datoteke}.md", "w", encoding='latin-1') as f:
+    with open(f"docs/{ime_datoteke}.md", "w", encoding='utf-8') as f:
         f.write(f"# {naslov}\n\nTukaj dodajte vsebino svoje nove strani.\n\n")
         f.write(f'Video: <video width="640" height="360" controls><source src="{video_pot}" type="video/mp4">Vaš brskalnik ne podpira predvajalnika videa.</video>')
 
     print(f"Datoteka {ime_datoteke}.md je bila ustvarjena v mapi 'docs'.")
 
-    css_path = "docs/assets/css"
+    css_path = os.path.join("docs", "assets", "css")
     os.makedirs(css_path, exist_ok=True)
 
-    with open(os.path.join(css_path, "style.scss"), "w") as scss_file:
+    with open(os.path.join(css_path, "style.scss"), "w", encoding='utf-8') as scss_file:
         scss_file.write(".naslov { color: red; }")
 
     print("Datoteka style.scss je bila ustvarjena ali posodobljena v mapi 'docs/assets/css'.")
